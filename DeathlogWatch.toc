@@ -1,0 +1,11 @@
+## Interface: 20506, 11509
+## Title: Deathlog Watch
+## Notes: Passive monitor for the Deathlog death-alert channel. Logs who broadcast each death report so fake reports can be traced to a sender.
+## Author: server admin tooling
+## Version: 1.0.0
+## X-License: GNU GPL3
+## X-Category: Hardcore
+## DefaultState: enabled
+## SavedVariables: DeathlogWatchDB
+
+DeathlogWatch.lua

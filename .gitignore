@@ -1,0 +1,9 @@
+dist/
+*.zip
+luac.out
+__pycache__/
+*.pyc
+*.bak
+*.swp
+*~
+.DS_Store
