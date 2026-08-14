@@ -113,60 +113,6 @@ with many uncorroborated reports across many distinct victims, especially with
 a high SRC-1 count. Use `/dlwatch sender <name>` to read the actual history
 before acting on anyone.
 
-## Coverage limits
-
-Custom channels in Classic Era are realm-wide, so a single observer sees the
-whole realm's traffic.
-
-**A name in Deathlog but not in DeathlogWatch is normal.** This is the most
-common surprise, and it is not a bug. DeathlogWatch only ever sees *live*
-broadcasts on the channel. Deathlog's own database is additionally backfilled
-by background sync, which pulls historical death records from other players —
-so its UI contains deaths that were never broadcast while you were watching,
-including deaths from before you installed anything. Only deaths that happened
-during a watch session can appear here. `/dlwatch victim <name>` tells you the
-size and start of the collected window when it comes up empty, so you can judge
-whether a miss is meaningful.
-
-One other partition to know about: Deathlog falls back to
-`hcdeathalertschannelb` and then `...bb` when the main channel is full, and
-clients on different overflow channels don't see each other. DeathlogWatch
-joins all three. If the realm ever grows enough to need a fourth, add the
-suffix to `joinChannels()`.
-
-Data is capped at 6000 events and rolls over oldest-first, so a long-running
-observer keeps a recent window rather than all history. Export periodically if
-you need a durable record.
-
-## Accented names
-
-Names like `Zejá` and `Björn` are handled. Lookups are case-insensitive and
-accent-folded, so all of these find the same character:
-
-```
-/dlwatch victim Zejá
-/dlwatch victim zejá
-/dlwatch victim Zeja
-```
-
-This matters more than it sounds. WoW's `string.lower()` is a byte-wise,
-locale-dependent call with no understanding of UTF-8 — in a Latin-1 locale it
-will rewrite the lead byte of a multibyte character and corrupt the name.
-DeathlogWatch lowercases ASCII only and leaves multibyte sequences untouched.
-
-If a lookup still misses, it prints near-matches from what it has recorded, so
-you can tell a typo apart from a genuine absence.
-
-Table columns are padded by character count rather than byte length, so an
-accented name doesn't drag the row out of line. (`string.format("%-16s")` pads
-by bytes, and `Zejá` is 5 bytes but 4 characters — enough to skew every column
-after it.)
-
-One caveat that isn't fixable from the addon: WoW ships no monospace font, so
-in-game the columns are correctly padded but still render slightly ragged in
-the proportional chat font. The text itself is square — paste `/dlwatch export`
-into any editor or spreadsheet and it lines up properly.
-
 ## Building a release
 
 ```sh
