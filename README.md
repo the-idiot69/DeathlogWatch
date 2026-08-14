@@ -145,17 +145,6 @@ silently in-game rather than loudly:
   listing a missing file loads a half-broken addon with no error. The build
   refuses to produce that.
 
-## Note on the underlying problem
-
-This addon gives you attribution, not prevention. Any client can still forge
-reports, and a determined abuser who learns they're being watched can spread
-activity across characters.
-
-Because every report is an ordinary chat message on a known channel, the
-complete fix is server-side: log that channel centrally and attribute every
-report to an account rather than a character. That can't be evaded from the
-client, which this can.
-
 ## License
 
 GPL-3.0, matching Deathlog, whose wire format this reimplements. See
